@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>3D建模交换机demo</title>
+	</head>
+	<body onload="drawSwitch();">
+		<div style="border:1px solid red;width:200px;float: right">
+			左键点击设备外框触发事件<br/> 
+			右键点击白色板卡触发事件<br/>
+			左键点击电源按钮触发事件<br/>
+		</div> 
+		<div id='canvas-frame' style="width:600px;height:600px;"></div>
+	</body>
+	<script src="./three.js"></script>
+	<script src="./OrbitControls.js"></script>
+	<script src="./threeJsCommonUtils.js"></script>
+	<script type="text/javascript">
+	
+		/* $(function(){
+			
+			drawSwitch();
+ 		}) */
+		
+ 		function drawSwitch(){
+			/**-------（固定调用）初始化组件开始----------*/
+			var myObj = new model3D();
+			
+			myObj.canvasId = "canvas-frame";
+			myObj.initParams3D();
+			//myObj.cameraZ = 900;
+			myObj.start();
+			/**-------（固定调用）初始化组件结束----------*/
+			
+			
+			
+			/**------填入参数开始-------*/
+			myObj.id = 1,
+			myObj.type = "switchDevice";
+		 	myObj.deviceData = {
+					"name" : "交换机"
+			}; 
+			
+			myObj.realWidth = 600;
+			myObj.virtualWidth = 6;
+			myObj.virtualHeight = 1;
+			myObj.virtualDepth = 3;
+			myObj.virtualPositionX = 3;
+			myObj.virtualPositionY = 0.5;
+			myObj.virtualPositionZ = 1.5;
+			myObj.centerCoordinateX = 0;
+			myObj.centerCoordinateY = -1.2;
+			myObj.centerCoordinateZ = 0.5; 
+			myObj.borderColor = 0x000ff0;
+			myObj.texture = "./images/switch/normal.jpg";  
+			
+			var func = function(){
+				alert("当前设备id:" + myObj.id);
+			}
+			myObj.addEventById(1, "click", func);
+			
+			
+			// 板卡参数
+			for(var i = 0; i < 4; i++){
+				var cbPart = new partsParams();
+				cbPart.id = i + 2,
+				cbPart.type = "cb";
+				cbPart.partData = {
+						"name" : "板卡"
+				};
+				cbPart.virtualWidth = 1;
+				cbPart.virtualHeight = 1.5;
+				cbPart.virtualPositionX = 1 + 1.3*i;
+				cbPart.virtualPositionY = 1;
+				cbPart.virtualPositionZ = 1;
+				cbPart.rotateAxisX = -Math.PI/2;
+				
+				myObj.addPart(cbPart);
+			}
+			
+			// 端口参数-第一排
+			for(var j = 0; j < 19; j++){
+				var portPart = new partsParams();
+				portPart.id = j + 10,
+				portPart.type = "port";
+				portPart.partData = {
+						"name" : "端口"	
+				};
+				
+				portPart.color = 0xffffff;
+				portPart.virtualWidth = 0.2;
+				portPart.virtualHeight = 0.2;
+				portPart.virtualPositionX = 0.2 + 0.3*j;
+				portPart.virtualPositionY = 0.68;
+				portPart.virtualPositionZ = 3;
+				if(j%2 == 0){
+					portPart.texture = "./images/port/normal.jpg";
+				}else{
+					portPart.texture = "./images/port/alert.jpg";
+				}
+				
+				
+				myObj.addPart(portPart);
+			}
+			
+			// 端口参数-第二排
+			for(var j = 0; j < 19; j++){
+				var portPart = new partsParams();
+				portPart.id = j + 30,
+				portPart.type = "port";
+				portPart.partData = {
+						"name" : "端口"	
+				};
+				
+				portPart.color = 0xff00ff;
+				portPart.virtualWidth = 0.2;
+				portPart.virtualHeight = 0.2;
+				portPart.virtualPositionX = 0.2 + 0.3*j;
+				portPart.virtualPositionY = 0.38;
+				portPart.virtualPositionZ = 3;
+				if(j %3 == 0){
+					portPart.texture = "./images/port/yellowPort.jpg";
+				}else{
+					portPart.texture = "./images/port/alert.jpg";
+				}
+				myObj.addPart(portPart);
+			}
+			
+			// 指示灯
+			var lightPart = new partsParams();
+			lightPart.id = 88,
+			lightPart.type = "light";
+			lightPart.partData = {
+					"name" : "指示灯"	
+			};
+			lightPart.virtualRadius = 0.06;
+			lightPart.color = 0x00FF00;
+			lightPart.virtualPositionX = 5.9;
+			lightPart.virtualPositionY = 0.68;
+			lightPart.virtualPositionZ = 3;
+			myObj.addPart(lightPart);
+			
+			// 电源开关
+			var powerSwitch = new partsParams();
+			powerSwitch.id = 89,
+			powerSwitch.type = "power";
+			powerSwitch.partData = {
+					"name" : "电源开关",
+					"state" : "off"
+			};
+			
+			powerSwitch.virtualWidth = 0.12;
+			powerSwitch.virtualHeight = 0.2;
+			powerSwitch.virtualDepth = 0.01;
+			powerSwitch.virtualPositionX = 5.9;
+			powerSwitch.virtualPositionY = 0.38;
+			powerSwitch.virtualPositionZ = 3;
+			if(powerSwitch.partData.state == "off"){
+				powerSwitch.texture = "./images/power/powerOff.png";
+			}else{
+				powerSwitch.texture = "./images/power/powerOn.png";
+			}
+			myObj.addPart(powerSwitch); 
+			
+			/**------填入参数结束-------*/
+			
+			
+			
+			
+			
+			/**-----（固定调用） 参数传入完毕后调用——绘制开始----*/
+			myObj.draw();
+			/**-----（固定调用） 参数传入完毕后调用——绘制结束----*/
+			
+			
+			
+			
+			/**-------添加事件开始-----------------*/
+			
+			/** 添加事件--事件可在model3D对象创建后的任意位置添加，但对模型外观有影响的事件，应在事件内部处理完
+				逻辑之后，调用redraw()函数，并传入更改了外观的对象，或对象数组，进行重绘
+			*/
+			// 添加type右键事件
+			myObj.addEventByType("cb", "contextmenu", function(){
+				alert("当前右键点击的是板卡部件");
+			});
+			
+			//获取电源开关组件参数对象，添加点击事件，点击时，其状态切换"on/off"，同时贴图切换，且指示灯也改变颜色
+			var params = myObj.getPartParamsById(89);	// 电源
+			var lParams = myObj.getPartParamsById(88);	// 指示灯
+			var paramsArr = [ params, lParams];
+			console.log(paramsArr.constructor);
+			// 给id为89的电源开关添加点击切换贴图的事件
+			myObj.addEventById(89, 'click', function(){
+				if(params.partData.state == 'on'){
+					params.partData.state = "off";
+					lParams.color = 0xf0f0f0;
+					params.texture = "./images/power/powerOff.png";
+					// 更改部件的外观以及位置后，需调用重绘函数
+					myObj.redraw(paramsArr);	
+				}else{
+					params.partData.state = "on";
+					lParams.color = 0x00FF00;
+					params.texture = "./images/power/powerOn.png";
+					
+					// 更改部件的外观以及位置后，需调用重绘函数
+					myObj.redraw(paramsArr);
+				}
+				console.log(params);	
+			});
+		
+			
+			/**-------添加事件结束-----------------*/
+			
+			
+			/*-------（固定调用）渲染------**/
+			myObj.animate();
+		}	
+			
+		
+		 
+	</script>
+</html>

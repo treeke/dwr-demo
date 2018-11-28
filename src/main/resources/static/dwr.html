@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>dwr html</title>
+    <script type='text/javascript' src='/dwr/engine.js'></script>
+    <script type='text/javascript' src='/dwr/interface/DwrPush.js'></script>
+    <script type='text/javascript' src='/dwr/util.js'></script>
+
+    <script>
+         window.onload = function () {
+            dwr.engine.setActiveReverseAjax(true);//开启反向ajax
+    		dwr.engine.setNotifyServerOnPageUnload(true);//刷新页面后销毁当前scriptsession
+    		dwr.engine.setErrorHandler(function() {
+    			alert("error");
+    		});
+    		DwrPush.init("dwr hello");
+
+        }
+        function onDwrData(data) {
+            alert(data);
+        } 
+    </script>
+</head>
+<body>
+
+dwr html
+</body>
+</html>

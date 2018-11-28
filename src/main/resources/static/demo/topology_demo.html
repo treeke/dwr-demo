@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>欢迎页</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="/css/main.css">
+<!-- 引入 echarts.js -->
+<script src="/plugins/echarts/echarts.min.js"></script>
+</head>
+<body>
+	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="EChartsDom" style="width: 1200px; height: 750px;"></div>
+	<script type="text/javascript">
+		function fetchData(callback) {
+			// 通过 setTimeout 模拟异步加载
+			setTimeout(function() {
+				callback({
+					categories : [ "衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子" ],
+					data : [ 5, 20, 36, 10, 10, 20 ]
+				});
+			}, 500);
+		}
+
+		fetchData(function(data) {
+
+		});
+	</script>
+
+	<script src="/libs/jquery.min.js"></script>
+	<script src="/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+	<script src="/js/common.js"></script>
+	<script src="./js/topology.v2_ctrl.js"></script>
+</body>
+</html>

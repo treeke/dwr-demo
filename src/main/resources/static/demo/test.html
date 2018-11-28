@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>任务基本信息</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/plugins/iview/iview.css">
+
+<script src="/libs/jquery.min.js"></script>
+<script src="/libs/bootstrap.min.js"></script>
+<script src="/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="/libs/vue.min.js"></script>
+<script src="/plugins/iview/iview.min.js"></script>
+
+<script src="/js/common.js"></script>
+
+</head>
+<body>
+	<h1>Hello World!</h1>
+	We are using node Chrome and Electron
+
+	<img alt="" src="/images/desktop_Computer_96.png">
+
+	<br />
+	<br />
+
+	<div id="vapp">
+
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">获取字典列表示例：</div>
+				<div class="col-sm-10">
+					<select class="form-control" id="taskId">
+						<option v-for="dict in dictList" value="{{dict.value}}">{{dict.label}}</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-2 control-label">文件</div>
+				<div class="col-sm-10">
+					<input type="file" class="file-input" name="file"/>
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<div class="col-sm-2 control-label">iview组件示例</div>
+				<div class="col-sm-10">
+					<template> <Row>
+					<Col span="12">
+					<Date-picker type="date" placeholder="选择日期" style="width: 200px" placeholder="创建时间"></Date-picker>
+					</Col>
+					</Row> </template>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script src="/js/modules/sys/dictUtils.js"></script>
+	<script src="/js/test.js"></script>
+</body>
+</html>
